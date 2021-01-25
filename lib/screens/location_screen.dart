@@ -13,7 +13,7 @@ class _LocationScreenState extends State<LocationScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/location_background.jpg'),
+            image: AssetImage('images/bg1.jpg'),
             fit: BoxFit.cover,
           ),
         ),

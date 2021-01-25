@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'screens/location_screen.dart';
+import 'package:weather_app/screens/loading_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
-      home: LocationScreen(),
+      home: LoadingScreen(),
     );
   }
 }
