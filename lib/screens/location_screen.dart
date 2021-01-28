@@ -13,6 +13,7 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weatherModel = WeatherModel();
   int temprature;
+  // double temp;
   String weatherIcon;
   String cityName;
   String tempMessage;
@@ -26,14 +27,15 @@ class _LocationScreenState extends State<LocationScreen> {
     setState(() {
       if (weatherData == null) {
         temprature = 0;
+        // temp = 0;
         weatherIcon = 'Error';
         tempMessage = 'Unable to get the weather data';
         cityName = '';
         return;
       }
-      double temp = weatherData['main']['temp'];
+      dynamic temp = weatherData['main']['temp'];
       temprature = temp.toInt();
-      tempMessage = weatherModel.getMessage(temprature);
+      tempMessage = weatherModel.getMessage(temp.toInt());
       var condition = weatherData['weather'][0]['id'];
       weatherIcon = weatherModel.weatherIcon(condition);
       cityName = weatherData['name'];
@@ -70,13 +72,20 @@ class _LocationScreenState extends State<LocationScreen> {
                     ),
                   ),
                   FlatButton(
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      var typedName = await Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) {
-                          return CityScreen();
-                        }),
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return CityScreen();
+                          },
+                        ),
                       );
+                      if (typedName != null) {
+                        var cityData =
+                            await weatherModel.getCityData(typedName);
+                        updateUI(cityData);
+                      }
                     },
                     child: Icon(
                       Icons.location_city,
